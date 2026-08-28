@@ -1,4 +1,4 @@
-# Personal Time Tracking (Google Calendar → Sheets → Looker Studio)
+# time-for-success (Google Calendar → Sheets → Looker Studio)
 
 A lightweight, personal time-tracking system for job-search "hustle time." No third-party apps —
 just Google Calendar, a Google Sheet, and Looker Studio.
