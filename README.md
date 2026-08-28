@@ -27,6 +27,7 @@ just Google Calendar, a Google Sheet, and Looker Studio.
 - `#BusinessCase` — case-specific prep
 - `#Research` — solo desk research (market/company/role)
 - `#Learning` — professional development / upskilling
+- `#Consulting` — billable hours work
 - `#Workout`
 - `#Break`
 - `#Other`
