@@ -43,6 +43,9 @@ Add or remove buckets any time by editing the "Buckets" tab in the Sheet — no 
    authorization). Also run `syncTimeTracking` once manually to pull in the first batch of data.
 5. In Looker Studio, add a data source pointing at the "Time Log" tab and build charts from there.
 
+Refreshes automatically every night, or any time on demand via the **Time Tracking > Sync Now**
+menu that appears in the Sheet.
+
 ## Screenshots
 
 _To add once the Sheet and dashboard are live._

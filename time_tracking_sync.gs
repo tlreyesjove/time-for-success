@@ -25,7 +25,8 @@
  * 5. Also run "syncTimeTracking" once manually to pull in your first batch of data.
  *
  * From then on, it runs automatically every night at 11pm and refreshes
- * the last 180 days of events into "Time Log".
+ * the last 180 days of events into "Time Log". You can also refresh any
+ * time you like via the "Time Tracking > Sync Now" menu in the Sheet.
  *
  * TAGGING CONVENTION (in your calendar event titles):
  *   One hashtag per event, e.g. "Coffee with Sam #Networking"
@@ -98,4 +99,13 @@ function createNightlyTrigger() {
     if (t.getHandlerFunction() === "syncTimeTracking") ScriptApp.deleteTrigger(t);
   });
   ScriptApp.newTrigger("syncTimeTracking").timeBased().everyDays(1).atHour(23).create();
+}
+
+/**
+ * Adds a "Time Tracking > Sync Now" menu to the Sheet so you can refresh
+ * on demand, any time, without opening the Apps Script editor.
+ * Runs automatically whenever you open the Sheet.
+ */
+function onOpen() {
+  SpreadsheetApp.getUi().createMenu("Time Tracking").addItem("Sync Now", "syncTimeTracking").addToUi();
 }
