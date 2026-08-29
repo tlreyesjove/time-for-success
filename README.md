@@ -1,6 +1,6 @@
 # time-for-success (Google Calendar → Sheets → Data Studio)
 
-A lightweight, personal time-tracking system for job-search "hustle time." No third-party apps —
+A lightweight, personal time-tracking system for "hustle time." No third-party apps —
 just Google Calendar, a Google Sheet, and Data Studio (formerly Looker Studio).
 
 ## How it works
@@ -13,8 +13,7 @@ just Google Calendar, a Google Sheet, and Data Studio (formerly Looker Studio).
    the calendar, pulls the hashtag out of each event, and writes one row per event into a
    **"Time Log"** tab: date, title, start, end, duration in hours, and category.
 4. A second **"Categories"** tab in the same Sheet is the official, editable list of valid
-   category names. Matching is case-insensitive, so `#consulting` and `#Consulting` both count —
-   whichever spelling is in the Categories tab is what gets stored. If an event's hashtag doesn't
+   category names. Matching is case-insensitive. If an event's hashtag doesn't
    match anything on that list at all (a typo like `#Consluting`), the script flags that row in a
    `Flag` column so it's easy to spot and fix.
 5. Data Studio connects to the "Time Log" tab for the actual dashboard (hours by category,
@@ -38,22 +37,7 @@ just Google Calendar, a Google Sheet, and Data Studio (formerly Looker Studio).
 Add or remove categories any time by editing the "Categories" tab in the Sheet — no code changes
 needed.
 
-## Setup
-
-1. Create a Google Calendar named **"Time Tracking"**.
-2. Create a Google Sheet with two tabs: **"Time Log"** and **"Categories"**. Put the category list
-   above into "Categories", one per row, column A.
-3. In the Sheet: **Extensions → Apps Script**, paste in `time_tracking_sync.gs`, save.
-4. Run `createNightlyTrigger` once from the Apps Script editor (this prompts a one-time Google
-   authorization). Also run `syncTimeTracking` once manually to pull in the first batch of data.
-5. In Data Studio, add a data source pointing at the "Time Log" tab and build charts from there.
-
-Refreshes automatically every night, or any time on demand via the **Time Tracking > Sync Now**
-menu that appears in the Sheet.
-
 ## Screenshots
-
-Example from real use (profile photo cropped out; no other people or company names appear).
 
 **Data Studio dashboard**
 ![Dashboard](Screenshots/dashboard.png)
