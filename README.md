@@ -1,7 +1,7 @@
-# time-for-success (Google Calendar → Sheets → Looker Studio)
+# time-for-success (Google Calendar → Sheets → Data Studio)
 
 A lightweight, personal time-tracking system for job-search "hustle time." No third-party apps —
-just Google Calendar, a Google Sheet, and Looker Studio.
+just Google Calendar, a Google Sheet, and Data Studio (formerly Looker Studio).
 
 ## How it works
 
@@ -17,7 +17,7 @@ just Google Calendar, a Google Sheet, and Looker Studio.
    whichever spelling is in the Categories tab is what gets stored. If an event's hashtag doesn't
    match anything on that list at all (a typo like `#Consluting`), the script flags that row in a
    `Flag` column so it's easy to spot and fix.
-5. Looker Studio connects to the "Time Log" tab for the actual dashboard (hours by category,
+5. Data Studio connects to the "Time Log" tab for the actual dashboard (hours by category,
    weekly trend, category share over time).
 
 ## Categories (current list)
@@ -46,11 +46,20 @@ needed.
 3. In the Sheet: **Extensions → Apps Script**, paste in `time_tracking_sync.gs`, save.
 4. Run `createNightlyTrigger` once from the Apps Script editor (this prompts a one-time Google
    authorization). Also run `syncTimeTracking` once manually to pull in the first batch of data.
-5. In Looker Studio, add a data source pointing at the "Time Log" tab and build charts from there.
+5. In Data Studio, add a data source pointing at the "Time Log" tab and build charts from there.
 
 Refreshes automatically every night, or any time on demand via the **Time Tracking > Sync Now**
 menu that appears in the Sheet.
 
 ## Screenshots
 
-_To add once the Sheet and dashboard are live._
+Example from real use (profile photo cropped out; no other people or company names appear).
+
+**Data Studio dashboard**
+![Dashboard](Screenshots/dashboard.png)
+
+**Calendar with category hashtags**
+![Calendar](Screenshots/calendar.png)
+
+**"Time Log" tab after a sync**
+![Time Log sheet](Screenshots/sheet.png)
