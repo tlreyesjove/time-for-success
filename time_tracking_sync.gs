@@ -71,10 +71,19 @@ function syncTimeTracking() {
     .map((e) => {
       const title = e.getTitle();
       const match = title.match(/#(\w+)/);
-      const bucket = match ? match[1] : "Untagged";
+
+      let bucket = "Untagged";
+      let isKnownBucket = true;
+      if (match) {
+        const rawBucket = match[1];
+        // Case-insensitive lookup: "#consulting" matches "Consulting" in the
+        // Buckets tab, and the canonical spelling from that tab is what gets stored.
+        const canonical = validBuckets.find((b) => b.toLowerCase() === rawBucket.toLowerCase());
+        bucket = canonical || rawBucket;
+        isKnownBucket = validBuckets.length === 0 || Boolean(canonical);
+      }
 
       const durationHrs = (e.getEndTime() - e.getStartTime()) / (1000 * 60 * 60);
-      const isKnownBucket = bucket === "Untagged" || validBuckets.length === 0 || validBuckets.includes(bucket);
 
       return [
         e.getStartTime(),
