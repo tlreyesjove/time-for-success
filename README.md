@@ -28,11 +28,12 @@ just Google Calendar, a Google Sheet, and Looker Studio.
 - `#InterviewPrep` — general interview prep
 - `#BusinessCase` — case-specific prep
 - `#Research` — solo desk research (market/company/role)
-- `#Learning` — professional development / upskilling
+- `#Building` — active skill-building / hands-on projects, especially with AI
 - `#Consulting` — billable hours work
 - `#Workout`
 - `#Break`
 - `#Other`
+- `#Reading`
 
 Add or remove categories any time by editing the "Categories" tab in the Sheet — no code changes
 needed.

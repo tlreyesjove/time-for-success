@@ -10,11 +10,12 @@
  *      InterviewPrep
  *      BusinessCase
  *      Research
- *      Learning
+ *      Building
  *      Consulting
  *      Workout
  *      Break
  *      Other
+ *      Reading
  *    (Edit this list any time — it's just used to catch typos, not to limit what you type.
  *    Adding a new category later needs no code changes, just a new row here.)
  * 3. In the Sheet, go to Extensions > Apps Script. Delete the placeholder code
