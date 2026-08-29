@@ -11,14 +11,16 @@ just Google Calendar, a Google Sheet, and Looker Studio.
    `Coffee with Sam #Networking`
 3. A Google Apps Script (`time_tracking_sync.gs`), bound to a Google Sheet, runs nightly. It reads
    the calendar, pulls the hashtag out of each event, and writes one row per event into a
-   **"Time Log"** tab: date, title, start, end, duration in hours, and bucket.
-4. A second **"Buckets"** tab in the same Sheet is the official, editable list of valid bucket
-   names. If an event's hashtag doesn't match anything on that list (a typo like `#breek` instead
-   of `#break`), the script flags that row in a `Flag` column so it's easy to spot and fix.
-5. Looker Studio connects to the "Time Log" tab for the actual dashboard (hours by bucket, weekly
-   trend, bucket share over time).
+   **"Time Log"** tab: date, title, start, end, duration in hours, and category.
+4. A second **"Categories"** tab in the same Sheet is the official, editable list of valid
+   category names. Matching is case-insensitive, so `#consulting` and `#Consulting` both count —
+   whichever spelling is in the Categories tab is what gets stored. If an event's hashtag doesn't
+   match anything on that list at all (a typo like `#Consluting`), the script flags that row in a
+   `Flag` column so it's easy to spot and fix.
+5. Looker Studio connects to the "Time Log" tab for the actual dashboard (hours by category,
+   weekly trend, category share over time).
 
-## Buckets (current list)
+## Categories (current list)
 
 - `#Networking` — talking to a person (informational interviews, scoping calls)
 - `#Applications` — job applications
@@ -32,13 +34,14 @@ just Google Calendar, a Google Sheet, and Looker Studio.
 - `#Break`
 - `#Other`
 
-Add or remove buckets any time by editing the "Buckets" tab in the Sheet — no code changes needed.
+Add or remove categories any time by editing the "Categories" tab in the Sheet — no code changes
+needed.
 
 ## Setup
 
 1. Create a Google Calendar named **"Time Tracking"**.
-2. Create a Google Sheet with two tabs: **"Time Log"** and **"Buckets"**. Put the bucket list above
-   into "Buckets", one per row, column A.
+2. Create a Google Sheet with two tabs: **"Time Log"** and **"Categories"**. Put the category list
+   above into "Categories", one per row, column A.
 3. In the Sheet: **Extensions → Apps Script**, paste in `time_tracking_sync.gs`, save.
 4. Run `createNightlyTrigger` once from the Apps Script editor (this prompts a one-time Google
    authorization). Also run `syncTimeTracking` once manually to pull in the first batch of data.

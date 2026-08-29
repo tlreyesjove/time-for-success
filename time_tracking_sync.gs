@@ -2,8 +2,8 @@
  * Time Tracking sync: Google Calendar -> Google Sheet
  *
  * SETUP (one time):
- * 1. Create a Google Sheet (any name). Add two tabs: "Time Log" and "Buckets".
- * 2. In "Buckets", list your allowed bucket names, one per row, column A:
+ * 1. Create a Google Sheet (any name). Add two tabs: "Time Log" and "Categories".
+ * 2. In "Categories", list your allowed category names, one per row, column A:
  *      Networking
  *      Applications
  *      Interview
@@ -11,11 +11,12 @@
  *      BusinessCase
  *      Research
  *      Learning
+ *      Consulting
  *      Workout
  *      Break
  *      Other
  *    (Edit this list any time — it's just used to catch typos, not to limit what you type.
- *    Adding a new bucket later needs no code changes, just a new row here.)
+ *    Adding a new category later needs no code changes, just a new row here.)
  * 3. In the Sheet, go to Extensions > Apps Script. Delete the placeholder code
  *    and paste this whole file in. Save (the little floppy disk icon).
  * 4. In the function dropdown at the top, choose "createNightlyTrigger" and
@@ -30,7 +31,7 @@
  *
  * TAGGING CONVENTION (in your calendar event titles):
  *   One hashtag per event, e.g. "Coffee with Sam #Networking"
- *   Keep bucket names as single words (no spaces) — use #InterviewPrep,
+ *   Keep category names as single words (no spaces) — use #InterviewPrep,
  *   not #Interview Prep.
  *   Rule of thumb: talking to a person -> #Networking. Solo desk work
  *   (market/company/role research) -> #Research. Actually being
@@ -40,17 +41,17 @@
 
 const CALENDAR_NAME = "Time Tracking";
 const LOG_SHEET_NAME = "Time Log";
-const BUCKETS_SHEET_NAME = "Buckets";
+const CATEGORIES_SHEET_NAME = "Categories";
 const DAYS_TO_SYNC = 180;
 
 function syncTimeTracking() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const logSheet = ss.getSheetByName(LOG_SHEET_NAME) || ss.insertSheet(LOG_SHEET_NAME);
-  const bucketsSheet = ss.getSheetByName(BUCKETS_SHEET_NAME);
+  const categoriesSheet = ss.getSheetByName(CATEGORIES_SHEET_NAME);
 
-  const validBuckets = bucketsSheet
-    ? bucketsSheet
-        .getRange(1, 1, Math.max(bucketsSheet.getLastRow(), 1), 1)
+  const validCategories = categoriesSheet
+    ? categoriesSheet
+        .getRange(1, 1, Math.max(categoriesSheet.getLastRow(), 1), 1)
         .getValues()
         .flat()
         .filter(String)
@@ -72,15 +73,15 @@ function syncTimeTracking() {
       const title = e.getTitle();
       const match = title.match(/#(\w+)/);
 
-      let bucket = "Untagged";
-      let isKnownBucket = true;
+      let category = "Untagged";
+      let isKnownCategory = true;
       if (match) {
-        const rawBucket = match[1];
+        const rawCategory = match[1];
         // Case-insensitive lookup: "#consulting" matches "Consulting" in the
-        // Buckets tab, and the canonical spelling from that tab is what gets stored.
-        const canonical = validBuckets.find((b) => b.toLowerCase() === rawBucket.toLowerCase());
-        bucket = canonical || rawBucket;
-        isKnownBucket = validBuckets.length === 0 || Boolean(canonical);
+        // Categories tab, and the canonical spelling from that tab is what gets stored.
+        const canonical = validCategories.find((c) => c.toLowerCase() === rawCategory.toLowerCase());
+        category = canonical || rawCategory;
+        isKnownCategory = validCategories.length === 0 || Boolean(canonical);
       }
 
       const durationHrs = (e.getEndTime() - e.getStartTime()) / (1000 * 60 * 60);
@@ -91,13 +92,13 @@ function syncTimeTracking() {
         e.getStartTime(),
         e.getEndTime(),
         durationHrs,
-        bucket,
-        isKnownBucket ? "" : "check spelling",
+        category,
+        isKnownCategory ? "" : "check spelling",
       ];
     });
 
   logSheet.clearContents();
-  logSheet.appendRow(["Date", "Event Title", "Start", "End", "Duration (hrs)", "Bucket", "Flag"]);
+  logSheet.appendRow(["Date", "Event Title", "Start", "End", "Duration (hrs)", "Category", "Flag"]);
   if (rows.length) {
     logSheet.getRange(2, 1, rows.length, rows[0].length).setValues(rows);
   }
